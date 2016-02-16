@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9B711206-1419-4009-8C6B-42131EE54355}</ProjectGuid>
+    <ProjectGuid>{989063ED-5BD1-463F-B229-CDEEDE9374B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GHApp.Communication</RootNamespace>
-    <AssemblyName>GHApp.Communication</AssemblyName>
+    <RootNamespace>GHApp.Communication.Common</RootNamespace>
+    <AssemblyName>GHApp.Communication.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,14 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Unity, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -60,25 +53,19 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChannelNames.cs" />
-    <Compile Include="IChannelConfig.cs" />
-    <Compile Include="ICommunicationChannel.cs" />
-    <Compile Include="IPublisher.cs" />
-    <Compile Include="ITopic.cs" />
-    <Compile Include="IMessage.cs" />
-    <Compile Include="IListener.cs" />
-    <Compile Include="IService.cs" />
-    <Compile Include="Publisher.cs" />
-    <Compile Include="Topic.cs" />
-    <Compile Include="MessageBase.cs" />
-    <Compile Include="Listener.cs" />
-    <Compile Include="Service.cs" />
-    <Compile Include="IUdpClientServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ChannelConfig.cs" />
+    <Compile Include="UdpClientServer.cs" />
+    <Compile Include="UdpCommunicationChannel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GHApp.Communication\GHApp.Communication.csproj">
+      <Project>{9B711206-1419-4009-8C6B-42131EE54355}</Project>
+      <Name>GHApp.Communication</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
