@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GHApp.Contracts.Dto;
 
-namespace GHApp.Contracts
+namespace GHApp.Service
 {
     public interface IGitHubUserSearchService
     {
