@@ -67,10 +67,8 @@
     <Compile Include="..\..\GHApp\GHApp\GHApp.Contracts\Dto\User.cs">
       <Link>Dto\User.cs</Link>
     </Compile>
-    <Compile Include="..\XFApp.Communication\Serializable.cs">
-      <Link>Serializable.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -97,17 +95,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Notifications\" />
-    <Folder Include="Queries\" />
-    <Folder Include="Responses\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\XFApp.Communication\XFApp.Communication.csproj">
-      <Project>{dc9a4af7-735b-4ef9-9ffe-a70d82c80a41}</Project>
-      <Name>XFApp.Communication</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

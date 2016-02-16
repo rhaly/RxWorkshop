@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace GHApp.Communication.Common
+namespace GHApp.Communication
 {
 	public class UdpCommunicationChannel : ICommunicationChannel
 	{

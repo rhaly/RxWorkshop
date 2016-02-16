@@ -79,6 +79,8 @@
     <Compile Include="IUdpClientServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ChannelConfig.cs" />
+    <Compile Include="UdpClientServer.cs" />
+    <Compile Include="UdpCommunicationChannel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

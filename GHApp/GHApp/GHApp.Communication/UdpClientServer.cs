@@ -5,7 +5,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
-namespace GHApp.Communication.Common
+namespace GHApp.Communication
 {
 	public class UdpClientServer : IUdpClientServer
 	{

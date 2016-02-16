@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Linq;
 using System.Reactive.Linq;
 using GHApp.Communication;
-using GHApp.Communication.Common;
 using GHApp.Contracts;
 using GHApp.Contracts.Dto;
 using GHApp.Contracts.Notifications;

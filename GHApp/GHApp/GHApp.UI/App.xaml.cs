@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
 using System.Windows;
 using GHApp.Communication;
-using GHApp.Communication.Common;
 using GHApp.Contracts.Queries;
 using Microsoft.Practices.Unity;
 
