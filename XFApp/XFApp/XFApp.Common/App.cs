@@ -2,31 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Prism.Unity;
 using Xamarin.Forms;
 
 namespace XFApp
 {
-    public class App : Application
+    public class App : PrismApplication
     {
-        public App()
-        {
-            // The root page of your application
-            MainPage = new ContentPage
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            XAlign = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
-                    }
-                }
-            };
-        }
-
         protected override void OnStart()
         {
             // Handle when your app starts
@@ -40,6 +22,16 @@ namespace XFApp
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+
+        protected override void OnInitialized()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void RegisterTypes()
+        {
+            throw new NotImplementedException();
         }
     }
 }
