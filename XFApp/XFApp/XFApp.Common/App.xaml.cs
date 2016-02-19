@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Prism.Unity;
-using Xamarin.Forms;
+using XFApp.Common.Views;
 
-namespace XFApp
+namespace XFApp.Common
 {
-    public class App : PrismApplication
+    public partial class App : PrismApplication
     {
         protected override void OnStart()
         {
@@ -26,12 +23,12 @@ namespace XFApp
 
         protected override void OnInitialized()
         {
-            throw new NotImplementedException();
+            InitializeComponent();
         }
 
         protected override void RegisterTypes()
         {
-            throw new NotImplementedException();
+            Container.RegisterTypeForNavigation<MainNavigationPage>();
         }
     }
 }

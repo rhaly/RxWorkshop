@@ -28,7 +28,7 @@ namespace XFApp.WinPhone
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
-            LoadApplication(new XFApp.App());
+            LoadApplication(new XFApp.Common.App());
         }
 
         /// <summary>
