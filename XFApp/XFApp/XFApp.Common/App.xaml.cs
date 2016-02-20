@@ -24,11 +24,13 @@ namespace XFApp.Common
         protected override void OnInitialized()
         {
             InitializeComponent();
+            NavigationService.Navigate("MainNavigationPage/SearchUserPage", useModalNavigation: false);
         }
 
         protected override void RegisterTypes()
         {
             Container.RegisterTypeForNavigation<MainNavigationPage>();
+            Container.RegisterTypeForNavigation<SearchUserPage>();
         }
     }
 }

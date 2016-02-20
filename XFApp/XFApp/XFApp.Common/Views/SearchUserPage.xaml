@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Class="XFApp.Common.Views.SearchUserPage"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:XFApp.Common.ViewModels;assembly=XFApp.Common"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModels:ISearchUserPageViewModel, IsDesignTimeCreatable=False}"
+             Title="User Browser">
+  <SearchBar Placeholder="Search user" Text="{Binding SearchUserText}" 
+             SearchCommand="{Binding SearchUserCommand}"
+             HorizontalOptions="CenterAndExpand"
+             VerticalOptions="Start"/>
+</ContentPage>

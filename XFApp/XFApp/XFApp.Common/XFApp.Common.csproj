@@ -14,6 +14,7 @@
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <XccRemoveIgnorableContent>True</XccRemoveIgnorableContent>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -40,8 +41,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MainNavigationPageViewModel.cs" />
+    <Compile Include="ViewModels\SearchUserPageViewModel.cs" />
     <Compile Include="Views\MainNavigationPage.xaml.cs">
       <DependentUpon>MainNavigationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchUserPage.xaml.cs">
+      <DependentUpon>SearchUserPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +104,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SearchUserPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.0.1.6505\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.0.1.6505\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -106,7 +117,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.0.1.6505\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.0.1.6505\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\packages\xcc.1.0.7\build\Xcc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xcc.1.0.7\build\Xcc.targets'))" />
   </Target>
+  <Import Project="..\..\packages\xcc.1.0.7\build\Xcc.targets" Condition="Exists('..\..\packages\xcc.1.0.7\build\Xcc.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
