@@ -8,7 +8,8 @@ namespace GHApp.Contracts.Dto
 	{
 		public string Login { get; set; }
 		public int Id { get; set; }
-		public string AvatarUrl { get; set; }
+        [JsonProperty()]
+        public string AvatarUrl { get; set; }
 		public string GravatarId { get; set; }
 		[JsonProperty()]
 		public Uri Url { get; set; }

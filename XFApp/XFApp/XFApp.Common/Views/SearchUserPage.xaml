@@ -10,8 +10,23 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=viewModels:ISearchUserPageViewModel, IsDesignTimeCreatable=False}"
              Title="User Browser">
+  <ContentPage.Resources>
+
+  </ContentPage.Resources>
+  <StackLayout Orientation="Vertical">
   <SearchBar Placeholder="Search user" Text="{Binding SearchUserText}" 
              SearchCommand="{Binding SearchUserCommand}"
              HorizontalOptions="CenterAndExpand"
              VerticalOptions="Start"/>
+  <ListView ItemsSource="{Binding Results}" 
+            CachingStrategy="RecycleElement"  
+            RefreshCommand="{Binding RefreshResultCommand}" IsPullToRefreshEnabled="True">
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <ImageCell ImageSource="{Binding AvatarUrl}" Text="{Binding Login}" Detail="{Binding Email}"/>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+  </ListView>
+
+  </StackLayout>
 </ContentPage>
