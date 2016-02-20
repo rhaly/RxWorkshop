@@ -1,9 +1,15 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Windows.Input;
 using GHApp.Contracts.Dto;
 using Prism.Commands;
 using Prism.Mvvm;
+using Refit;
+using XFApp.Common.Model.Services;
 
 namespace XFApp.Common.ViewModels
 {
@@ -60,7 +66,19 @@ namespace XFApp.Common.ViewModels
 
         private void SearchUser()
         {
-            //TODO delegate to user
+            var gitHubApi = RestService.For<IGitHubApi>("https://api.github.com");
+            
+
+            gitHubApi.SearchUser(SearchUserText, "Basic " + Convert.ToBase64String(byteArray))
+                .Subscribe(res =>
+                {
+                    Debug.WriteLine(res);
+                }, e => OnError(e));
+        }
+
+        private void OnError(Exception exception)
+        {
+            Debug.WriteLine(exception);
         }
 
         private void RefreshResults()
