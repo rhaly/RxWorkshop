@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Text;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Input;
 using GHApp.Contracts.Dto;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
-using Prism.Services;
-using Refit;
 using XFApp.Common.Model;
 using XFApp.Common.Model.Services;
 
@@ -35,15 +30,16 @@ namespace XFApp.Common.ViewModels
     public class SearchUserPageViewModel : ReactiveObject, ISearchUserPageViewModel, INavigationAware
     {
         private readonly IGitHubService _gitHubService;
-        private readonly IScheduleProvider _scheduleProvider;
+        private readonly INavigationService _navigationService;
 
         private readonly ISubject<bool> _isLoadingSubject = new BehaviorSubject<bool>(false);
         private readonly ISubject<string> _searchUserSubject = new Subject<string>(); 
 
-        public SearchUserPageViewModel(IGitHubService gitHubService, IScheduleProvider scheduleProvider)
+        public SearchUserPageViewModel(IGitHubService gitHubService, INavigationService navigationService, IScheduleProvider scheduleProvider)
         {
             _gitHubService = gitHubService;
-            _scheduleProvider = scheduleProvider;
+            _navigationService = navigationService;
+            var scheduleProvider1 = scheduleProvider;
             SearchUserCommand = new DelegateCommand(SearchUser);
             NavigateToUserCommand = new DelegateCommand<User>(NavigateToUserDetails);
 
@@ -60,11 +56,11 @@ namespace XFApp.Common.ViewModels
                     return _gitHubService.SearchUser(SearchUserText);
                 })
                 .Switch()
-                .ObserveOn(_scheduleProvider.UiScheduler)
+                .ObserveOn(scheduleProvider1.UiScheduler)
                 .Subscribe(OnUserResults, OnError);
 
             _isLoadingSubject
-                .ObserveOn(_scheduleProvider.UiScheduler)
+                .ObserveOn(scheduleProvider1.UiScheduler)
                 .Subscribe(loading => IsLoading = loading);
 
         }
@@ -133,7 +129,9 @@ namespace XFApp.Common.ViewModels
 
         private void NavigateToUserDetails(User user)
         {
-            //IPageDialogService pds;
+            var parameters = new NavigationParameters();
+            parameters.Add("user",user);
+            _navigationService.Navigate<UserRepositoriesPageViewModel>(parameters);
         }
 
         private void OnUserResults(IEnumerable<User> searchResults)

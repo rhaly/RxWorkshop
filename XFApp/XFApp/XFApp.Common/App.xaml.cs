@@ -4,6 +4,7 @@ using Prism.Unity;
 using Refit;
 using XFApp.Common.Model;
 using XFApp.Common.Model.Services;
+using XFApp.Common.ViewModels;
 using XFApp.Common.Views;
 
 namespace XFApp.Common
@@ -35,6 +36,7 @@ namespace XFApp.Common
         {
             Container.RegisterTypeForNavigation<MainNavigationPage>();
             Container.RegisterTypeForNavigation<SearchUserPage>();
+            Container.RegisterTypeForNavigation<UserRepositoriesPage,UserRepositoriesPageViewModel>();
             Container.RegisterType<IAuthenticationFactory, AuthenticationFactory>();
             Container.RegisterType<IGitHubService, GitHubService>();
             Container.RegisterAsSingleton<IGitHubApi>(() => RestService.For<IGitHubApi>("https://api.github.com"));

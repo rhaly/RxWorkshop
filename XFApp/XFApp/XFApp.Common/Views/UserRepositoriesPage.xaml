@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:XFApp.Common.Controls;assembly=XFApp.Common"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             Title="Repositories"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Class="XFApp.Common.Views.UserRepositoriesPage"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:XFApp.Common.ViewModels;assembly=XFApp.Common"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModels:IUserRepositoriesPageViewModel, IsDesignTimeCreatable=False}">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <controls:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ListView ItemsSource="{Binding Results}"
+              CachingStrategy="RecycleElement" IsRefreshing="{Binding IsLoading}"
+              RefreshCommand="{Binding SearchUserCommand}" IsPullToRefreshEnabled="True">
+    <ListView.ItemTemplate>
+      <DataTemplate x:Key="ReposTemplate">
+        <TextCell Text="{Binding Name}" />
+      </DataTemplate>
+    </ListView.ItemTemplate>
+    <!--ListView.Behaviors>
+      <controls:EventToCommandBehavior EventName="ItemTapped" EventArgsConverter="{StaticResource ItemTappedConverter}"  Command="{Binding NavigateToUserCommand}" />
+    </ListView.Behaviors>-->
+  </ListView>
+
+</ContentPage>

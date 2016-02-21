@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Linq;
 using GHApp.Contracts.Dto;
-using Refit;
 
 namespace XFApp.Common.Model.Services
 {
     public interface IGitHubService
     {
         IObservable<IEnumerable<User>> SearchUser(string userName);
+
+        IObservable<IEnumerable<Repo>> GetUserRepositories(string user);
     }
 
     class GitHubService : IGitHubService
@@ -27,6 +27,11 @@ namespace XFApp.Common.Model.Services
         {
             return _api.SearchUser(userName, _authenticationFactory.BasicAuthenticationCredentials())
                 .Select(x => x.Users);
+        }
+
+        public IObservable<IEnumerable<Repo>> GetUserRepositories(string user)
+        {
+            return _api.GetUserRepos(user, _authenticationFactory.BasicAuthenticationCredentials());
         }
     }
 }
