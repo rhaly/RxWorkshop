@@ -17,9 +17,9 @@ namespace XFApp.Common.ViewModels
     {
         ObservableCollection<Commit> Commits { get; set; }
 
-        IRepoModel Repo { get;  }
+        IRepoModel Repo { get; }
 
-        User User { get;  }
+        User User { get; }
 
         bool IsLoading { get; set; }
 
@@ -30,13 +30,16 @@ namespace XFApp.Common.ViewModels
     public class CommitsPageViewModel : ReactiveObject, ICommitsPageViewModel, INavigationAware
     {
         private readonly IGitHubService _gitHubService;
+        private readonly IRepoNotificationService _repoNotificationService;
         private readonly IScheduleProvider _scheduleProvider;
+        private IDisposable _repoNotificationsSubscription;
 
-        public CommitsPageViewModel(IGitHubService gitHubService, IScheduleProvider scheduleProvider)
+        public CommitsPageViewModel(IGitHubService gitHubService, IRepoNotificationService repoNotificationService, IScheduleProvider scheduleProvider)
         {
             _gitHubService = gitHubService;
+            _repoNotificationService = repoNotificationService;
             _scheduleProvider = scheduleProvider;
-            RefreshCommand = new DelegateCommand(()=>LoadCommits());
+            RefreshCommand = new DelegateCommand(LoadCommits);
         }
 
         private ObservableCollection<Commit> _commits;
@@ -60,7 +63,7 @@ namespace XFApp.Common.ViewModels
             get { return _isLoading; }
             set
             {
-                _isLoading = value; 
+                _isLoading = value;
                 OnPropertyChanged();
             }
         }
@@ -71,12 +74,16 @@ namespace XFApp.Common.ViewModels
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-            //Todo dispose subscription to commit updates
+            if (_repoNotificationsSubscription != null)
+            {
+                _repoNotificationsSubscription.Dispose();
+                _repoNotificationsSubscription = null;
+            }
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            //TODO subscribe to commit updates
+
             var repoModel = parameters["repo"] as IRepoModel;
             if (repoModel == null)
             {
@@ -92,6 +99,10 @@ namespace XFApp.Common.ViewModels
 
             User = user;
             LoadCommits();
+
+            _repoNotificationsSubscription =_repoNotificationService.RepoNotificationStream
+                .Where(repoUrl => repoUrl == Repo.Dto.Url.ToString())
+                .Subscribe(_ => LoadCommits());
 
         }
 

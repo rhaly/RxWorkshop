@@ -45,6 +45,10 @@ namespace XFApp.Common
 
             Container.RegisterAsSingleton<IScheduleProvider>(new ScheduleProvider());
             Container.RegisterAsSingleton<IRepoService, RepoService>();
+
+            var repoNotificationService = new RepoNotificationService();
+            Container.RegisterAsSingleton<IRepoNotificationService>(repoNotificationService);
+            Container.RegisterAsSingleton<IRepoNotificationController>(repoNotificationService);
         }
     }
 }

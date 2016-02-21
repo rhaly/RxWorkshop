@@ -48,6 +48,7 @@
     <Compile Include="Model\IRepoModel.cs" />
     <Compile Include="Model\IScheduleProvider.cs" />
     <Compile Include="Model\Services\IAuthenticationFactory.cs" />
+    <Compile Include="Model\Services\IRepoNotificationService.cs" />
     <Compile Include="Model\Services\IGitHubApi.cs" />
     <Compile Include="Model\Services\IGitHubService.cs" />
     <Compile Include="Model\Services\IRepoService.cs" />
