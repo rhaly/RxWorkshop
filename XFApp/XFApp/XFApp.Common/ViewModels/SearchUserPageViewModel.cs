@@ -88,7 +88,17 @@ namespace XFApp.Common.ViewModels
 
         public ICommand SearchUserCommand { get; set; }
 
-        public ICommand NavigateToUserCommand { get; set; }
+        private ICommand _navigateToUserCommand;
+
+        public ICommand NavigateToUserCommand
+        {
+            get { return _navigateToUserCommand; }
+            set
+            {
+                _navigateToUserCommand = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand RefreshResultCommand { get; set; }
 

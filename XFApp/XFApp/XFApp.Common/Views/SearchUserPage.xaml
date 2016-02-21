@@ -13,15 +13,17 @@
              Title="User Browser">
   
   <ContentPage.Resources>
-    
+    <ResourceDictionary>
+      <controls:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+    </ResourceDictionary>
   </ContentPage.Resources>
   <StackLayout Orientation="Vertical">
   <SearchBar Placeholder="Search user" Text="{Binding SearchUserText}" 
              SearchCommand="{Binding SearchUserCommand}"
              HorizontalOptions="CenterAndExpand"
              VerticalOptions="Start"/>
-  <ListView ItemsSource="{Binding Results}"
-            CachingStrategy="RecycleElement"  IsRefreshing="{Binding IsLoading}"
+  <ListView ItemsSource="{Binding Results}" 
+            CachingStrategy="RecycleElement" IsRefreshing="{Binding IsLoading}"
             RefreshCommand="{Binding SearchUserCommand}" IsPullToRefreshEnabled="True">
     <ListView.ItemTemplate>
       <DataTemplate x:Key="UserTemplate">
@@ -29,7 +31,7 @@
       </DataTemplate>
     </ListView.ItemTemplate>
     <ListView.Behaviors>
-      <controls:TapItemBehavior TappedItemCommand="{Binding NavigateToUserCommand}"/>
+      <controls:EventToCommandBehavior EventName="ItemTapped" EventArgsConverter="{StaticResource ItemTappedConverter}"  Command="{Binding NavigateToUserCommand}" />
     </ListView.Behaviors>
   </ListView>
 

@@ -40,6 +40,7 @@ namespace GHApp.Contracts.Dto
 		public object Company { get; set; }
 		public string Blog { get; set; }
 		public string Location { get; set; }
+        [JsonProperty]
 		public string Email { get; set; }
 		public bool? Hireable { get; set; }
 		public string Bio { get; set; }

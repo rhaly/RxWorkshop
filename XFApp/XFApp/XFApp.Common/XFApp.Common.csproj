@@ -39,7 +39,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TapItemBehavior.cs" />
+    <Compile Include="Controls\BindableBehavior.cs" />
+    <Compile Include="Controls\ItemTappedEventArgsConverter.cs" />
+    <Compile Include="Controls\EventToCommandBehavior.cs" />
     <Compile Include="Extenstions\UnityExtenstions.cs" />
     <Compile Include="Model\IReactiveObject.cs" />
     <Compile Include="Model\IScheduleProvider.cs" />
