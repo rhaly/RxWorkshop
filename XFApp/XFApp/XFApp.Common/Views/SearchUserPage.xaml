@@ -7,25 +7,27 @@
              x:Class="XFApp.Common.Views.SearchUserPage"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:XFApp.Common.ViewModels;assembly=XFApp.Common"
+             xmlns:controls="clr-namespace:XFApp.Common.Controls;assembly=XFApp.Common"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=viewModels:ISearchUserPageViewModel, IsDesignTimeCreatable=False}"
              Title="User Browser">
+  
   <ContentPage.Resources>
-
+    <DataTemplate x:Key="UserTemplate">
+      <ImageCell ImageSource="{Binding AvatarUrl}" Text="{Binding Login}" Detail="{Binding Email}"/>
+    </DataTemplate>
   </ContentPage.Resources>
   <StackLayout Orientation="Vertical">
   <SearchBar Placeholder="Search user" Text="{Binding SearchUserText}" 
              SearchCommand="{Binding SearchUserCommand}"
              HorizontalOptions="CenterAndExpand"
              VerticalOptions="Start"/>
-  <ListView ItemsSource="{Binding Results}"
+  <ListView ItemsSource="{Binding Results}" ItemTemplate="{StaticResource UserTemplate}"
             CachingStrategy="RecycleElement"  
             RefreshCommand="{Binding SearchUserCommand}" IsPullToRefreshEnabled="True">
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ImageCell ImageSource="{Binding AvatarUrl}" Text="{Binding Login}" Detail="{Binding Email}"/>
-      </DataTemplate>
-    </ListView.ItemTemplate>
+    <ListView.Behaviors>
+      <controls:TapItemBehavior TappedItemCommand="{Binding NavigateToUserCommand}"/>
+    </ListView.Behaviors>
   </ListView>
 
   </StackLayout>

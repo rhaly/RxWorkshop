@@ -19,7 +19,7 @@ namespace XFApp.Common.ViewModels
 
         ICommand SearchUserCommand { get;}
 
-        ICommand NavigateToUser { get;  }
+        ICommand NavigateToUserCommand { get;  }
 
 
         ObservableCollection<User> Results { get; set; }
@@ -33,8 +33,10 @@ namespace XFApp.Common.ViewModels
         {
             _gitHubService = gitHubService;
             SearchUserCommand = new DelegateCommand(SearchUser);
-        }        
+            NavigateToUserCommand = new DelegateCommand<User>(NavigateToUserDetails);
+        }
 
+        
         private string _searchUserText;
 
         public string SearchUserText
@@ -49,7 +51,7 @@ namespace XFApp.Common.ViewModels
 
         public ICommand SearchUserCommand { get; set; }
 
-        public ICommand NavigateToUser { get; set; }
+        public ICommand NavigateToUserCommand { get; set; }
 
         public ICommand RefreshResultCommand { get; set; }
 
@@ -68,12 +70,14 @@ namespace XFApp.Common.ViewModels
         private void SearchUser()
         {
             _gitHubService.SearchUser(SearchUserText)
+                
                 .Subscribe(res => Results = new ObservableCollection<User>(res));
         }
 
-        private void OnError(Exception exception)
+        private void NavigateToUserDetails(User user)
         {
-            Debug.WriteLine(exception);
+           
         }
+
     }
 }
