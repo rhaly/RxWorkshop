@@ -2,6 +2,7 @@
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 using Refit;
+using XFApp.Common.Model;
 using XFApp.Common.Model.Services;
 using XFApp.Common.Views;
 
@@ -37,6 +38,7 @@ namespace XFApp.Common
             Container.RegisterType<IAuthenticationFactory, AuthenticationFactory>();
             Container.RegisterType<IGitHubService, GitHubService>();
             Container.RegisterAsSingleton<IGitHubApi>(() => RestService.For<IGitHubApi>("https://api.github.com"));
+            Container.RegisterAsSingleton<IScheduleProvider>(new ScheduleProvider());
         }
     }
 }

@@ -41,6 +41,8 @@
     </Compile>
     <Compile Include="Controls\TapItemBehavior.cs" />
     <Compile Include="Extenstions\UnityExtenstions.cs" />
+    <Compile Include="Model\IReactiveObject.cs" />
+    <Compile Include="Model\IScheduleProvider.cs" />
     <Compile Include="Model\Services\IAuthenticationFactory.cs" />
     <Compile Include="Model\Services\IGitHubApi.cs" />
     <Compile Include="Model\Services\IGitHubService.cs" />

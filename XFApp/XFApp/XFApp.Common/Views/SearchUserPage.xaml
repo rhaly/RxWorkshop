@@ -13,18 +13,21 @@
              Title="User Browser">
   
   <ContentPage.Resources>
-    <DataTemplate x:Key="UserTemplate">
-      <ImageCell ImageSource="{Binding AvatarUrl}" Text="{Binding Login}" Detail="{Binding Email}"/>
-    </DataTemplate>
+    
   </ContentPage.Resources>
   <StackLayout Orientation="Vertical">
   <SearchBar Placeholder="Search user" Text="{Binding SearchUserText}" 
              SearchCommand="{Binding SearchUserCommand}"
              HorizontalOptions="CenterAndExpand"
              VerticalOptions="Start"/>
-  <ListView ItemsSource="{Binding Results}" ItemTemplate="{StaticResource UserTemplate}"
-            CachingStrategy="RecycleElement"  
+  <ListView ItemsSource="{Binding Results}"
+            CachingStrategy="RecycleElement"  IsRefreshing="{Binding IsLoading}"
             RefreshCommand="{Binding SearchUserCommand}" IsPullToRefreshEnabled="True">
+    <ListView.ItemTemplate>
+      <DataTemplate x:Key="UserTemplate">
+        <ImageCell ImageSource="{Binding AvatarUrl}" Text="{Binding Login}" Detail="{Binding Email}"/>
+      </DataTemplate>
+    </ListView.ItemTemplate>
     <ListView.Behaviors>
       <controls:TapItemBehavior TappedItemCommand="{Binding NavigateToUserCommand}"/>
     </ListView.Behaviors>

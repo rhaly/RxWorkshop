@@ -6,7 +6,7 @@ namespace XFApp.Common.Controls
     public class TapItemBehavior : Behavior<ListView>
     {
         public static readonly BindableProperty TappedItemCommandProperty =
-            BindableProperty.Create<TapItemBehavior, ICommand>(behavior => behavior.TappedItemCommand, null);
+            BindableProperty.Create<TapItemBehavior, ICommand>(behavior => behavior.TappedItemCommand, null, BindingMode.TwoWay);
 
         public ICommand TappedItemCommand
         {
