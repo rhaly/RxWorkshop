@@ -21,17 +21,18 @@ namespace XFApp.Common.ViewModels
 
         ICommand NavigateToUser { get;  }
 
-        ICommand RefreshResultCommand { get; }
 
         ObservableCollection<User> Results { get; set; }
     }
 
     public class SearchUserPageViewModel : BindableBase, ISearchUserPageViewModel
     {
-        public SearchUserPageViewModel()
+        private readonly IGitHubService _gitHubService;
+
+        public SearchUserPageViewModel(IGitHubService gitHubService)
         {
+            _gitHubService = gitHubService;
             SearchUserCommand = new DelegateCommand(SearchUser);
-            RefreshResultCommand = new DelegateCommand(RefreshResults);
         }        
 
         private string _searchUserText;
@@ -66,24 +67,13 @@ namespace XFApp.Common.ViewModels
 
         private void SearchUser()
         {
-            var gitHubApi = RestService.For<IGitHubApi>("https://api.github.com");
-            
-
-            gitHubApi.SearchUser(SearchUserText, "Basic " + Convert.ToBase64String(byteArray))
-                .Subscribe(res =>
-                {
-                    Debug.WriteLine(res);
-                }, e => OnError(e));
+            _gitHubService.SearchUser(SearchUserText)
+                .Subscribe(res => Results = new ObservableCollection<User>(res));
         }
 
         private void OnError(Exception exception)
         {
             Debug.WriteLine(exception);
-        }
-
-        private void RefreshResults()
-        {
-          //TODO refresh results
         }
     }
 }

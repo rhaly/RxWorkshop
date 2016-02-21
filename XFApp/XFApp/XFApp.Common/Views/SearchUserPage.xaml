@@ -18,9 +18,9 @@
              SearchCommand="{Binding SearchUserCommand}"
              HorizontalOptions="CenterAndExpand"
              VerticalOptions="Start"/>
-  <ListView ItemsSource="{Binding Results}" 
+  <ListView ItemsSource="{Binding Results}"
             CachingStrategy="RecycleElement"  
-            RefreshCommand="{Binding RefreshResultCommand}" IsPullToRefreshEnabled="True">
+            RefreshCommand="{Binding SearchUserCommand}" IsPullToRefreshEnabled="True">
     <ListView.ItemTemplate>
       <DataTemplate>
         <ImageCell ImageSource="{Binding AvatarUrl}" Text="{Binding Login}" Detail="{Binding Email}"/>
