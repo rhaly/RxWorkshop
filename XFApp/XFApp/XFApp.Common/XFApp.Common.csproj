@@ -40,7 +40,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BindableBehavior.cs" />
-    <Compile Include="Controls\ItemTappedEventArgsConverter.cs" />
+    <Compile Include="Controls\Converters\ItemTappedEventArgsConverter.cs" />
+    <Compile Include="Controls\Converters\RepoImageSourceConverter.cs" />
     <Compile Include="Controls\EventToCommandBehavior.cs" />
     <Compile Include="Extenstions\UnityExtenstions.cs" />
     <Compile Include="Model\IReactiveObject.cs" />

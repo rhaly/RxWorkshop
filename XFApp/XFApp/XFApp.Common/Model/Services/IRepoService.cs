@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using GHApp.Contracts.Dto;
 
@@ -35,7 +36,27 @@ namespace XFApp.Common.Model.Services
 
         public IObservable<Unit> ToggleRepoWatch(IRepoModel repo)
         {
-            throw new NotImplementedException();
+            var url = repo.Dto.Url.ToString();
+            if (_watchedRepos.Contains(url))
+            {
+                _watchedRepos.Remove(url);
+                repo.IsWatched = false;
+            }
+            else
+            {
+                _watchedRepos.Add(url);
+                repo.IsWatched = true;
+            }
+
+            return Observable.Create<Unit>(obs =>
+            {
+                //TODO stop or start watching call service
+                obs.OnNext(Unit.Default);
+                obs.OnCompleted();
+
+                return Disposable.Empty;
+            });
+            
         }
 
         private IEnumerable<IRepoModel> MarkWatchedStatus(IEnumerable<Repo> repos)

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Windows.Input;
 using GHApp.Contracts.Dto;
 using Prism.Commands;
@@ -19,6 +21,8 @@ namespace XFApp.Common.ViewModels
         ICommand NavigateToCommitsCommand { get; }
 
         ICommand WatchRepoCommand { get; }
+
+        bool IsLoading { get; set; }
     }
 
     public class UserRepositoriesPageViewModel : ReactiveObject, IUserRepositoriesPageViewModel, INavigationAware
@@ -34,11 +38,16 @@ namespace XFApp.Common.ViewModels
             _scheduleProvider = scheduleProvider;
             NavigateToCommitsCommand = new DelegateCommand<IRepoModel>(NavigateToCommits);
             WatchRepoCommand = new DelegateCommand<IRepoModel>(ToggleWatchRepo);
+
         }
 
         private void ToggleWatchRepo(IRepoModel repo)
         {
-            
+            IsLoading = true;
+            _repoService.ToggleRepoWatch(repo)
+                .SubscribeOn(_scheduleProvider.TaskPool)
+                .ObserveOn(_scheduleProvider.UiScheduler)
+                .Subscribe(_ => IsLoading = false);
         }
 
         private void NavigateToCommits(IRepoModel repo)
@@ -71,7 +80,20 @@ namespace XFApp.Common.ViewModels
         }
 
         public ICommand NavigateToCommitsCommand { get; }
+
         public ICommand WatchRepoCommand { get; }
+
+        private bool _isLoading;
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                _isLoading = value; 
+                OnPropertyChanged();
+            }
+        }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
@@ -87,11 +109,17 @@ namespace XFApp.Common.ViewModels
             }
 
             User = user;
-
+            IsLoading = true;
             _repoService.GetReposForUser(User.Login)
                 .ObserveOn(_scheduleProvider.UiScheduler)
                 .SubscribeOn(_scheduleProvider.TaskPool)
-                .Subscribe(res => Results = new ObservableCollection<IRepoModel>(res));
+                .Subscribe(OnReposLoaded);
+        }
+
+        private void OnReposLoaded(IEnumerable<IRepoModel> res)
+        {
+            Results = new ObservableCollection<IRepoModel>(res);
+            IsLoading = false;
         }
     }
 }
