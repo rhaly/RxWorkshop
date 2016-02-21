@@ -44,10 +44,12 @@
     <Compile Include="Controls\EventToCommandBehavior.cs" />
     <Compile Include="Extenstions\UnityExtenstions.cs" />
     <Compile Include="Model\IReactiveObject.cs" />
+    <Compile Include="Model\IRepoModel.cs" />
     <Compile Include="Model\IScheduleProvider.cs" />
     <Compile Include="Model\Services\IAuthenticationFactory.cs" />
     <Compile Include="Model\Services\IGitHubApi.cs" />
     <Compile Include="Model\Services\IGitHubService.cs" />
+    <Compile Include="Model\Services\IRepoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MainNavigationPageViewModel.cs" />
     <Compile Include="ViewModels\SearchUserPageViewModel.cs" />

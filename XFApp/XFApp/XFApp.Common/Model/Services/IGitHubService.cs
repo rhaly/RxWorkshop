@@ -10,6 +10,8 @@ namespace XFApp.Common.Model.Services
         IObservable<IEnumerable<User>> SearchUser(string userName);
 
         IObservable<IEnumerable<Repo>> GetUserRepositories(string user);
+
+        IObservable<IEnumerable<Commit>> GetCommits(string user, string repo);
     }
 
     class GitHubService : IGitHubService
@@ -32,6 +34,11 @@ namespace XFApp.Common.Model.Services
         public IObservable<IEnumerable<Repo>> GetUserRepositories(string user)
         {
             return _api.GetUserRepos(user, _authenticationFactory.BasicAuthenticationCredentials());
+        }
+
+        public IObservable<IEnumerable<Commit>> GetCommits(string user, string repo)
+        {
+            return _api.GetCommits(user, repo, _authenticationFactory.BasicAuthenticationCredentials());
         }
     }
 }

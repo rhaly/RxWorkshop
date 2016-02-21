@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using GHApp.Contracts.Dto;
+using Prism.Commands;
 using Prism.Navigation;
 using XFApp.Common.Model;
 using XFApp.Common.Model.Services;
@@ -12,20 +14,36 @@ namespace XFApp.Common.ViewModels
     {
         User User { get; set; }
 
-        ObservableCollection<Repo> Results { get; set; }
+        ObservableCollection<IRepoModel> Results { get; set; }
+
+        ICommand NavigateToCommitsCommand { get; }
+
+        ICommand WatchRepoCommand { get; }
     }
 
     public class UserRepositoriesPageViewModel : ReactiveObject, IUserRepositoriesPageViewModel, INavigationAware
     {
-        private readonly IGitHubService _gitHubService;
+        private readonly IRepoService _repoService;
         private readonly INavigationService _navigationService;
         private readonly IScheduleProvider _scheduleProvider;
 
-        public UserRepositoriesPageViewModel(IGitHubService gitHubService, INavigationService navigationService, IScheduleProvider scheduleProvider)
+        public UserRepositoriesPageViewModel(IRepoService repoService, INavigationService navigationService, IScheduleProvider scheduleProvider)
         {
-            _gitHubService = gitHubService;
+            _repoService = repoService;
             _navigationService = navigationService;
             _scheduleProvider = scheduleProvider;
+            NavigateToCommitsCommand = new DelegateCommand<IRepoModel>(NavigateToCommits);
+            WatchRepoCommand = new DelegateCommand<IRepoModel>(ToggleWatchRepo);
+        }
+
+        private void ToggleWatchRepo(IRepoModel repo)
+        {
+            
+        }
+
+        private void NavigateToCommits(IRepoModel repo)
+        {
+           
         }
 
         private User _user;
@@ -40,9 +58,9 @@ namespace XFApp.Common.ViewModels
             }
         }
 
-        private ObservableCollection<Repo> _results;
+        private ObservableCollection<IRepoModel> _results;
 
-        public ObservableCollection<Repo> Results
+        public ObservableCollection<IRepoModel> Results
         {
             get { return _results; }
             set
@@ -52,6 +70,9 @@ namespace XFApp.Common.ViewModels
             }
         }
 
+        public ICommand NavigateToCommitsCommand { get; }
+        public ICommand WatchRepoCommand { get; }
+
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
             
@@ -60,15 +81,17 @@ namespace XFApp.Common.ViewModels
         public void OnNavigatedTo(NavigationParameters parameters)
         {
             var user = parameters["user"] as User;
-            if (user != null)
+            if (user == null)
             {
-                User = user;
+                return;
             }
 
-            _gitHubService.GetUserRepositories(User.Login)
+            User = user;
+
+            _repoService.GetReposForUser(User.Login)
                 .ObserveOn(_scheduleProvider.UiScheduler)
                 .SubscribeOn(_scheduleProvider.TaskPool)
-                .Subscribe(res => Results = new ObservableCollection<Repo>(res));
+                .Subscribe(res => Results = new ObservableCollection<IRepoModel>(res));
         }
     }
 }

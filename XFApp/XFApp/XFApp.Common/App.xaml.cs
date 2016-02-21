@@ -41,6 +41,7 @@ namespace XFApp.Common
             Container.RegisterType<IGitHubService, GitHubService>();
             Container.RegisterAsSingleton<IGitHubApi>(() => RestService.For<IGitHubApi>("https://api.github.com"));
             Container.RegisterAsSingleton<IScheduleProvider>(new ScheduleProvider());
+            Container.RegisterAsSingleton<IRepoService, RepoService>();
         }
     }
 }

@@ -16,17 +16,31 @@
       <controls:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
     </ResourceDictionary>
   </ContentPage.Resources>
-  <ListView ItemsSource="{Binding Results}"
+  <ListView ItemsSource="{Binding Results}" x:Name="repos"
               CachingStrategy="RecycleElement" IsRefreshing="{Binding IsLoading}"
               RefreshCommand="{Binding SearchUserCommand}" IsPullToRefreshEnabled="True">
     <ListView.ItemTemplate>
       <DataTemplate x:Key="ReposTemplate">
-        <TextCell Text="{Binding Name}" />
+        <ViewCell >
+          <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="15,0">
+            <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" TextColor="Accent" />
+            <Image IsVisible="True" HorizontalOptions="End">
+                <Image.Source>
+                  <OnPlatform x:TypeArguments="ImageSource"
+                              Android="ic_grade_black_24dp.png"
+                              WinPhone="Assets/ic_grade_black_24dp_2x.png" />
+                </Image.Source>
+              <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference Name=repos}, Path=BindingContext.WatchRepoCommand}" CommandParameter="{Binding .}" />
+              </Image.GestureRecognizers>
+            </Image>
+          </StackLayout>
+        </ViewCell>
       </DataTemplate>
     </ListView.ItemTemplate>
-    <!--ListView.Behaviors>
-      <controls:EventToCommandBehavior EventName="ItemTapped" EventArgsConverter="{StaticResource ItemTappedConverter}"  Command="{Binding NavigateToUserCommand}" />
-    </ListView.Behaviors>-->
+    <ListView.Behaviors>
+      <controls:EventToCommandBehavior EventName="ItemTapped" EventArgsConverter="{StaticResource ItemTappedConverter}"  Command="{Binding NavigateToCommitsCommand}" />
+    </ListView.Behaviors>
   </ListView>
 
 </ContentPage>

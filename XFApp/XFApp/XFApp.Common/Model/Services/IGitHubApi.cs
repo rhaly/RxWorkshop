@@ -13,5 +13,8 @@ namespace XFApp.Common.Model.Services
 
         [Get("/users/{user}/repos")]
         IObservable<IEnumerable<Repo>> GetUserRepos(string user, [Header("Authorization")]string authorization);
+
+        [Get("/repos/{user}/{repo}/commits")]
+        IObservable<IEnumerable<Commit>> GetCommits(string user, string repo, [Header("Authorization")]string authorization);
     }
 }
