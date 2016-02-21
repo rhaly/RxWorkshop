@@ -14,13 +14,15 @@ namespace XFApp.Common.ViewModels
 {
     public interface IUserRepositoriesPageViewModel : IReactiveObject
     {
-        User User { get; set; }
+        User User { get; }
 
         ObservableCollection<IRepoModel> Results { get; set; }
 
         ICommand NavigateToCommitsCommand { get; }
 
         ICommand WatchRepoCommand { get; }
+
+        ICommand RefreshCommand { get; }
 
         bool IsLoading { get; set; }
     }
@@ -38,8 +40,9 @@ namespace XFApp.Common.ViewModels
             _scheduleProvider = scheduleProvider;
             NavigateToCommitsCommand = new DelegateCommand<IRepoModel>(NavigateToCommits);
             WatchRepoCommand = new DelegateCommand<IRepoModel>(ToggleWatchRepo);
+            RefreshCommand = new DelegateCommand(LoadRepos);
 
-        }
+        }        
 
         private void ToggleWatchRepo(IRepoModel repo)
         {
@@ -52,20 +55,13 @@ namespace XFApp.Common.ViewModels
 
         private void NavigateToCommits(IRepoModel repo)
         {
-           
+            var parameters = new NavigationParameters();
+            parameters.Add("repo", repo);
+            parameters.Add("user", User);
+            _navigationService.Navigate<CommitsPageViewModel>(parameters);
         }
 
-        private User _user;
-
-        public User User
-        {
-            get { return _user; }
-            set
-            {
-                _user = value;
-                OnPropertyChanged();
-            }
-        }
+        public User User { get; private set; }
 
         private ObservableCollection<IRepoModel> _results;
 
@@ -83,6 +79,8 @@ namespace XFApp.Common.ViewModels
 
         public ICommand WatchRepoCommand { get; }
 
+        public ICommand RefreshCommand { get; }
+
         private bool _isLoading;
 
         public bool IsLoading
@@ -90,14 +88,13 @@ namespace XFApp.Common.ViewModels
             get { return _isLoading; }
             set
             {
-                _isLoading = value; 
+                _isLoading = value;
                 OnPropertyChanged();
             }
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-            
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
@@ -109,6 +106,11 @@ namespace XFApp.Common.ViewModels
             }
 
             User = user;
+            LoadRepos();
+        }
+
+        private void LoadRepos()
+        {
             IsLoading = true;
             _repoService.GetReposForUser(User.Login)
                 .ObserveOn(_scheduleProvider.UiScheduler)

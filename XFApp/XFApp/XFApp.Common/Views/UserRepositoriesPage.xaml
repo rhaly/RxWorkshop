@@ -19,7 +19,7 @@
   </ContentPage.Resources>
   <ListView ItemsSource="{Binding Results}" x:Name="repos"
               CachingStrategy="RecycleElement" IsRefreshing="{Binding IsLoading}"
-              RefreshCommand="{Binding SearchUserCommand}" IsPullToRefreshEnabled="True">
+              RefreshCommand="{Binding RefreshCommand}" IsPullToRefreshEnabled="True">
     <ListView.ItemTemplate>
       <DataTemplate x:Key="ReposTemplate">
         <ViewCell >

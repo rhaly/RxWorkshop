@@ -50,6 +50,7 @@ namespace XFApp.Common.ViewModels
             _searchUserSubject
                 .Throttle(TimeSpan.FromMilliseconds(500))
                 .DistinctUntilChanged()
+                .Where(x=>!string.IsNullOrEmpty(x))
                 .Select(searchText =>
                 {                    
                     _isLoadingSubject.OnNext(true);
@@ -67,6 +68,7 @@ namespace XFApp.Common.ViewModels
 
         private void OnError(Exception e)
         {
+            _isLoadingSubject.OnNext(false);
             Debug.WriteLine(e);
         }
 

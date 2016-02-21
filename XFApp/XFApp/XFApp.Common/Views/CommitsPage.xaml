@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="XFApp.Common.Views.CommitsPage" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:XFApp.Common.ViewModels;assembly=XFApp.Common"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModels:ICommitsPageViewModel, IsDesignTimeCreatable=False}">
+
+  <ListView ItemsSource="{Binding Commits}" 
+              CachingStrategy="RecycleElement" IsRefreshing="{Binding IsLoading}"
+              RefreshCommand="{Binding RefreshCommand}" IsPullToRefreshEnabled="True">
+    <ListView.ItemTemplate>
+      <DataTemplate x:Key="ReposTemplate">
+        <TextCell Text="{Binding CommitInfo.Message}" Detail="{Binding Author.Name}" />
+      </DataTemplate>
+    </ListView.ItemTemplate>
+  </ListView>
+</ContentPage>

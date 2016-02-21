@@ -37,9 +37,12 @@ namespace XFApp.Common
             Container.RegisterTypeForNavigation<MainNavigationPage>();
             Container.RegisterTypeForNavigation<SearchUserPage>();
             Container.RegisterTypeForNavigation<UserRepositoriesPage,UserRepositoriesPageViewModel>();
+            Container.RegisterTypeForNavigation<CommitsPage,CommitsPageViewModel>();
+            
             Container.RegisterType<IAuthenticationFactory, AuthenticationFactory>();
             Container.RegisterType<IGitHubService, GitHubService>();
             Container.RegisterAsSingleton<IGitHubApi>(() => RestService.For<IGitHubApi>("https://api.github.com"));
+
             Container.RegisterAsSingleton<IScheduleProvider>(new ScheduleProvider());
             Container.RegisterAsSingleton<IRepoService, RepoService>();
         }
