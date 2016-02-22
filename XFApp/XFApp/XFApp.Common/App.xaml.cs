@@ -55,7 +55,7 @@ namespace XFApp.Common
             Container.RegisterAsSingleton<IRepoNotificationService>(repoNotificationService);
             Container.RegisterAsSingleton<IRepoNotificationController>(repoNotificationService);
 
-            var signalRService = new SignalRClientService("http://172.30.1.102:22500/");
+            var signalRService = new SignalRClientService(Container.Resolve<IRepoNotificationController>(),"http://172.30.1.102:22500/");
             Container.RegisterAsSingleton<ISignalRClientService>(signalRService);
         }
     }

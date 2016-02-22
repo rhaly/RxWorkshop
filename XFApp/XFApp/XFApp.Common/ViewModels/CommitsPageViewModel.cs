@@ -100,8 +100,10 @@ namespace XFApp.Common.ViewModels
             User = user;
             LoadCommits();
 
-            _repoNotificationsSubscription =_repoNotificationService.RepoNotificationStream
-                .Where(repoUrl => repoUrl == Repo.Dto.Url.ToString())
+            _repoNotificationsSubscription = _repoNotificationService.RepoNotificationStream
+                .Where(repoUrl => repoUrl == Repo.Dto.CommitsUrl.ToString().Replace("{/sha}", string.Empty))
+                .Throttle(TimeSpan.FromSeconds(1))
+                .ObserveOn(_scheduleProvider.UiScheduler)
                 .Subscribe(_ => LoadCommits());
 
         }

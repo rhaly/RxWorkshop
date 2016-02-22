@@ -7,7 +7,7 @@ namespace XFApp.Common.Model.Services
 {
     public class SignalRClient : ReactiveObject
     {
-        public SignalRClient(string url)
+        public SignalRClient(IRepoNotificationController repoNotificationController, string url)
         {
             Connection = new HubConnection(url);
 
@@ -16,12 +16,10 @@ namespace XFApp.Common.Model.Services
             };
 
             RepoHubProxy = Connection.CreateHubProxy("RepoHub");
-            RepoHubProxy.On<string>("RepoChanged", (repo) => {
+            RepoHubProxy.On<string>("RepoChanged", repo => {
                 Debug.WriteLine(repo +" changed");
-                //OnMessageReceived?.Invoke(username, text);
+                repoNotificationController.NotifyRepoChanges(repo);
             });
-
-
         }
 
         public IHubProxy RepoHubProxy { get; set; }
@@ -57,11 +55,11 @@ namespace XFApp.Common.Model.Services
             RepoHubProxy.Invoke("UnWatchRepo", repo);
         }
 
-        public static async Task<SignalRClient> CreateAndStart(string url)
-        {
-            var client = new SignalRClient(url);
-            await client.Start();
-            return client;
-        }
+        //public static async Task<SignalRClient> CreateAndStart(string url)
+        //{
+        //    var client = new SignalRClient(url);
+        //    await client.Start();
+        //    return client;
+        //}
     }
 }

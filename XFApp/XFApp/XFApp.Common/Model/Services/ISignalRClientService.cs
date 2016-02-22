@@ -18,9 +18,9 @@ namespace XFApp.Common.Model.Services
     {
         private readonly SignalRClient _client;
 
-        public SignalRClientService(string http)
+        public SignalRClientService(IRepoNotificationController controller,string http)
         {
-            _client = new SignalRClient(http);
+            _client = new SignalRClient(controller,http);
             _client.Start().ContinueWith(task => {
                 if (task.IsFaulted)
                     Debug.WriteLine("An error occurred when trying to connect to SignalR: " + task.Exception.InnerExceptions[0].Message, "OK");
