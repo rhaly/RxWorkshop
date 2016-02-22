@@ -11,7 +11,7 @@ namespace XFApp.Backend.Controllers
         [Route("register")]
         public IHttpActionResult GetRegistered()
         {
-            return Ok(Guid.NewGuid());
+            return Json(Guid.NewGuid());
         }
     }
 }

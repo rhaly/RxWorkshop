@@ -20,10 +20,12 @@ namespace XFApp.Common.Model.Services
         private readonly HashSet<string> _watchedRepos = new HashSet<string>();
 
         private readonly IGitHubService _gitHubService;
+        private readonly ISignalRClientService _signalRClientService;
 
-        public RepoService(IGitHubService gitHubService)
+        public RepoService(IGitHubService gitHubService, ISignalRClientService signalRClientService)
         {
             _gitHubService = gitHubService;
+            _signalRClientService = signalRClientService;
         }
 
 
@@ -40,11 +42,13 @@ namespace XFApp.Common.Model.Services
             if (_watchedRepos.Contains(url))
             {
                 _watchedRepos.Remove(url);
+                _signalRClientService.UnWatchRepo(repo.Dto);
                 repo.IsWatched = false;
             }
             else
             {
                 _watchedRepos.Add(url);
+                _signalRClientService.WatchRepo(repo.Dto);
                 repo.IsWatched = true;
             }
 

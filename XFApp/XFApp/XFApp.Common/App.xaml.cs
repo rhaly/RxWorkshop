@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using GHApp.Contracts.Dto;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 using Refit;
+using Xamarin.Forms;
 using XFApp.Common.Model;
 using XFApp.Common.Model.Services;
 using XFApp.Common.ViewModels;
@@ -10,7 +13,7 @@ using XFApp.Common.Views;
 namespace XFApp.Common
 {
     public partial class App : PrismApplication
-    {
+    {       
         protected override void OnStart()
         {
             // Handle when your app starts
@@ -30,6 +33,8 @@ namespace XFApp.Common
         {
             InitializeComponent();
             NavigationService.Navigate("MainNavigationPage/SearchUserPage", useModalNavigation: false);
+
+           
         }
 
         protected override void RegisterTypes()
@@ -49,6 +54,9 @@ namespace XFApp.Common
             var repoNotificationService = new RepoNotificationService();
             Container.RegisterAsSingleton<IRepoNotificationService>(repoNotificationService);
             Container.RegisterAsSingleton<IRepoNotificationController>(repoNotificationService);
+
+            var signalRService = new SignalRClientService("http://172.30.1.102:22500/");
+            Container.RegisterAsSingleton<ISignalRClientService>(signalRService);
         }
     }
 }
