@@ -17,7 +17,7 @@
       <controls:RepoImageSourceConverter x:Key="RepoImageSourceConverter"/>
     </ResourceDictionary>
   </ContentPage.Resources>
-  <ListView ItemsSource="{Binding Results}" x:Name="repos"
+  <ListView ItemsSource="{Binding Results}" x:Name="repos" StyleId ="UserResults"
               CachingStrategy="RecycleElement" IsRefreshing="{Binding IsLoading}"
               RefreshCommand="{Binding RefreshCommand}" IsPullToRefreshEnabled="True">
     <ListView.ItemTemplate>
