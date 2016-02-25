@@ -10,7 +10,6 @@ namespace XFApp.UITests
             {
                 return ConfigureApp
                     .Android
-                    //.ApiKey("818b3bd138ed33a39209ae36565ef62c")
                     .ApkFile("../../../XFApp/XFApp.Droid/bin/Release/XFApp.Droid.apk")
                     .StartApp();
             }
